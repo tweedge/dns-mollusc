@@ -1,1 +1,1 @@
-from .doh_client import doh_client
+from .doh_client_py3 import doh_client_py3
