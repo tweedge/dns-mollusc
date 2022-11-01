@@ -2,7 +2,7 @@ import requests
 from time import time, sleep
 
 
-class doh_client_py3(object):
+class doh_client(object):
     def __init__(
         self,
         server="https://cloudflare-dns.com/dns-query?",
