@@ -15,7 +15,7 @@ class mollusc_client(object):
         self.client = requests.session()
         self.last_query_time = 0
 
-    def query(self, query_input, query_type, get_dnssec=False):
+    def query(self, query_input, query_type="A"):
         self._backoff()
 
         query_params = {
@@ -23,9 +23,6 @@ class mollusc_client(object):
             "type": query_type,
             "ct": "application/dns-json",
         }
-
-        if get_dnssec:
-            query_params["do"] = "true"
 
         code = 0
         server_error = ""
@@ -44,7 +41,9 @@ class mollusc_client(object):
         except Exception as e:
             server_error = e
 
-        return mollusc_response(parsed_result, raw_result, code, server_error, self.server)
+        return mollusc_response(
+            parsed_result, raw_result, code, server_error, self.server
+        )
 
     def _backoff(self):
         now = time()

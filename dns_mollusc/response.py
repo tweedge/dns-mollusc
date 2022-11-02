@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pprint import pprint
 
+
 @dataclass
 class mollusc_response:
     response: dict
@@ -29,7 +30,7 @@ class mollusc_response:
             return True
         if "::" in answers:
             return True
-        
+
         additional = self.get_additional()
         for additional_record in additional:
             if "EDE: 17 (Filtered)" in additional_record:
