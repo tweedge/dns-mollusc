@@ -7,9 +7,6 @@ http_ok = 200
 
 
 def test_google():
-    """
-    Google works as expected, and resolution of a basic query works
-    """
     client = doh_client("https://dns.google/resolve?")
     result = client.query("dns.google", "A")
 
@@ -18,9 +15,6 @@ def test_google():
 
 
 def test_cloudflare():
-    """
-    Cloudflare works as expected, and resolution of a basic query works
-    """
     client = doh_client("https://cloudflare-dns.com/dns-query?")
     result = client.query("dns.google", "A")
 
@@ -28,10 +22,23 @@ def test_cloudflare():
     assert expected_ips == result.get_answers().sort()
 
 
+def test_cloudflare_security():
+    client = doh_client("https://security.cloudflare-dns.com/dns-query?")
+    result = client.query("dns.google", "A")
+
+    assert result.status_code == http_ok
+    assert expected_ips == result.get_answers().sort()
+
+
+def test_cloudflare_family():
+    client = doh_client("https://family.cloudflare-dns.com/dns-query?")
+    result = client.query("dns.google", "A")
+
+    assert result.status_code == http_ok
+    assert expected_ips == result.get_answers().sort()
+
+
 def test_adguard():
-    """
-    Adguard works as expected, and resolution of a basic query works
-    """
     client = doh_client("https://dns.adguard.com/resolve?")
     result = client.query("dns.google", "A")
 
@@ -39,10 +46,31 @@ def test_adguard():
     assert expected_ips == result.get_answers().sort()
 
 
+def test_adguard_family():
+    client = doh_client("https://family.adguard-dns.com/dns-query?")
+    result = client.query("dns.google", "A")
+
+    assert result.status_code == http_ok
+    assert expected_ips == result.get_answers().sort()
+
+
+def test_adguard_unfiltered():
+    client = doh_client("https://unfiltered.adguard-dns.com/dns-query?")
+    result = client.query("dns.google", "A")
+
+    assert result.status_code == http_ok
+    assert expected_ips == result.get_answers().sort()
+
+
+def test_cira():
+    client = doh_client("https://private.canadianshield.cira.ca/dns-query?")
+    result = client.query("dns.google", "A")
+
+    assert result.status_code == http_ok
+    assert expected_ips == result.get_answers().sort()
+
+
 def test_nextdns():
-    """
-    NextDNS works as expected, and resolution of a basic query works
-    """
     client = doh_client("https://dns.nextdns.io/dns-query?")
     result = client.query("dns.google", "A")
 
@@ -51,9 +79,6 @@ def test_nextdns():
 
 
 def test_default():
-    """
-    A DNS server is selected by default, and resolution of a basic query works
-    """
     client = doh_client()
     result = client.query("dns.google", "A")
 
