@@ -1,12 +1,12 @@
-from .record import doh_response
+from .response import mollusc_response
 import requests
 from time import time, sleep
 
 
-class doh_client(object):
+class mollusc_client(object):
     def __init__(
         self,
-        server="https://cloudflare-dns.com/dns-query?",
+        server="https://security.cloudflare-dns.com/dns-query?",
         max_qps=100,
     ):
         self.server = server
@@ -44,7 +44,7 @@ class doh_client(object):
         except Exception as e:
             server_error = e
 
-        return doh_response(parsed_result, raw_result, code, server_error, self.server)
+        return mollusc_response(parsed_result, raw_result, code, server_error, self.server)
 
     def _backoff(self):
         now = time()
