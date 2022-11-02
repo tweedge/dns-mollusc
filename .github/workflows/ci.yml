@@ -23,10 +23,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pytest requests
-      - name: Install doh_client_py3
+      - name: Install simple_doh_client
         run: |
           pip install .
-      - name: Ensure doh_client_py3 (installed version) works
+      - name: Ensure simple_doh_client (installed version) works
         run: |
-          rm -r doh_client_py3
+          rm -r simple_doh_client
           pytest
