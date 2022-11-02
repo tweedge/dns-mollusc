@@ -46,30 +46,6 @@ def test_adguard():
     assert expected_ips == result.get_answers().sort()
 
 
-def test_adguard_family():
-    client = doh_client("https://family.adguard-dns.com/dns-query?")
-    result = client.query("dns.google", "A")
-
-    assert result.status_code == http_ok
-    assert expected_ips == result.get_answers().sort()
-
-
-def test_adguard_unfiltered():
-    client = doh_client("https://unfiltered.adguard-dns.com/dns-query?")
-    result = client.query("dns.google", "A")
-
-    assert result.status_code == http_ok
-    assert expected_ips == result.get_answers().sort()
-
-
-def test_cira():
-    client = doh_client("https://private.canadianshield.cira.ca/dns-query?")
-    result = client.query("dns.google", "A")
-
-    assert result.status_code == http_ok
-    assert expected_ips == result.get_answers().sort()
-
-
 def test_nextdns():
     client = doh_client("https://dns.nextdns.io/dns-query?")
     result = client.query("dns.google", "A")
